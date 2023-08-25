@@ -2,6 +2,7 @@
 #include "util.h"
 #include "http.h"
 
+#define HTTP_USER_AGENT "mdex/1.0"
 #define REQS_PER_SECOND 5
 #define RETRY_DELAY 1000
 #define RETRY_COUNT 2
@@ -21,6 +22,7 @@ int http_init(void)
 	if (!(curl = curl_easy_init()))
 		goto cleanup_global;
 	if (curl_easy_setopt(curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1) != CURLE_OK ||
+	    curl_easy_setopt(curl, CURLOPT_USERAGENT, HTTP_USER_AGENT) != CURLE_OK ||
 	    curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1) != CURLE_OK ||
 	    curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1) != CURLE_OK ||
 	    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, callback) != CURLE_OK)
